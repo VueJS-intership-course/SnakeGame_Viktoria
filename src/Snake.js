@@ -1,13 +1,13 @@
-import { randomGridPosition } from './gridPositions.js';
+import { randomGridPosition } from "./gridPositions.js";
 
 export class Snake {
   constructor() {
-    this.snakeBody = [randomGridPosition()]; 
+    this.snakeBody = [randomGridPosition()];
     this.newSegments = 0;
   }
 
   movement(inputDirection) {
-    // this.addSegments();
+    this.addSegments();
 
     for (let i = this.snakeBody.length - 2; i >= 0; i--) {
       this.snakeBody[i + 1] = { ...this.snakeBody[i] };
@@ -18,18 +18,18 @@ export class Snake {
   }
 
   render(gameBoard) {
-    this.snakeBody.forEach(segment => {
-      const snakeElement = document.createElement('div');
+    this.snakeBody.forEach((segment) => {
+      const snakeElement = document.createElement("div");
       snakeElement.style.gridRowStart = segment.y;
       snakeElement.style.gridColumnStart = segment.x;
-      snakeElement.classList.add('snake');
+      snakeElement.classList.add("snake");
       gameBoard.appendChild(snakeElement);
     });
   }
 
-  // grow() {
-  //   this.newSegments++;
-  // }
+  grow() {
+    this.newSegments++;
+  }
 
   equalPositions(pos1, pos2) {
     return pos1.x === pos2.x && pos1.y === pos2.y;
@@ -50,5 +50,11 @@ export class Snake {
     return this.onSnake(this.snakeBody[0], { ignoreHead: true });
   }
 
+  addSegments() {
+    for (let i = 0; i < this.newSegments; i++) {
+      this.snakeBody.push({ ...this.snakeBody[this.snakeBody.length - 1] });
+    }
 
+    this.newSegments = 0;
+  }
 }

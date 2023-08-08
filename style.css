@@ -20,3 +20,8 @@ body {
   background-color: rgb(12, 198, 12);
   border: .25vmin solid black;
 }
+
+.food {
+  background-color: red;
+  border: .25vmin solid black;
+}
