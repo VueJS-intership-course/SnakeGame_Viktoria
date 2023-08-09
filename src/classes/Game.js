@@ -41,7 +41,7 @@ export class Game {
     const inputDirection = this.input.getInputDirection();
     this.snake.movement(inputDirection);
     this.food.update();
-    this.checkForisGam();
+    this.checkForGameOver();
   }
 
   render() {
@@ -50,7 +50,7 @@ export class Game {
     this.food.render(this.gameBoard);
   }
 
-  checkForisGam() {
+  checkForGameOver() {
     this.isGameOver = outsideGrid(this.snake.getSnakeStart()) || this.snake.isIntersecting();
     // todo -> remove outside grid isGameOver & implement mirroring
   }
