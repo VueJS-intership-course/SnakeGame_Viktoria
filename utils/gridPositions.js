@@ -1,4 +1,5 @@
-const GRID_SIZE = 25;
+/* eslint-disable import/extensions */
+import { GRID_SIZE } from './constants.js';
 
 export function randomGridPosition() {
   return {
@@ -9,9 +10,9 @@ export function randomGridPosition() {
 
 export function outsideGrid(position) {
   return (
-    position.x < 1 ||
-    position.x > GRID_SIZE ||
-    position.y < 1 ||
-    position.y > GRID_SIZE
+    position.x < 1
+    || position.x > GRID_SIZE
+    || position.y < 1
+    || position.y > GRID_SIZE
   );
 }

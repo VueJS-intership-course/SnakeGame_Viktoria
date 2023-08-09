@@ -1,14 +1,17 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-restricted-globals */
 /* eslint-disable import/extensions */
 import { Snake } from './Snake.js';
-import { Input } from '../utils/controls.js';
-import { outsideGrid } from './gridPositions.js';
+import { Input } from '../../utils/Input.js';
+import { outsideGrid } from '../../utils/gridPositions.js';
 import { Food } from './Food.js';
+import { SNAKE_SPEED } from '../../utils/constants.js';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Game {
   constructor() {
     this.lastRenderTime = 0;
-    this.gameOver = false;
+    this.isGameOver = false;
     this.gameBoard = document.getElementById('game-board');
     this.snake = new Snake();
     this.input = new Input();
@@ -17,7 +20,7 @@ export class Game {
 
   main(currentTime) {
     // check if game is over
-    if (this.gameOver) {
+    if (this.isGameOver) {
       if (confirm('You lost. Click OK to restart')) {
         window.location = '';
       }
@@ -38,7 +41,7 @@ export class Game {
     const inputDirection = this.input.getInputDirection();
     this.snake.movement(inputDirection);
     this.food.update();
-    this.checkForGameOver();
+    this.checkForisGam();
   }
 
   render() {
@@ -47,15 +50,16 @@ export class Game {
     this.food.render(this.gameBoard);
   }
 
-  checkForGameOver() {
-    this.gameOver = outsideGrid(this.snake.getSnakeStart()) || this.snake.isIntersecting();
-    // todo -> remove outside grid gameover & implement mirroring
+  checkForisGam() {
+    this.isGameOver = outsideGrid(this.snake.getSnakeStart()) || this.snake.isIntersecting();
+    // todo -> remove outside grid isGameOver & implement mirroring
   }
 
   start() {
     window.requestAnimationFrame(this.main.bind(this));
   }
 }
-const SNAKE_SPEED = 5;
+
+// snake speed const
 const game = new Game();
 game.start();

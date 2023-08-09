@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/prefer-default-export */
-import { randomGridPosition } from './gridPositions.js';
+import { randomGridPosition } from '../../utils/gridPositions.js';
 
 export class Food {
   constructor(snake) {

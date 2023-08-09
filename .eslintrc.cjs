@@ -1,27 +1,29 @@
+/* eslint-disable quote-props */
+/* eslint-disable indent */
 module.exports = {
     'env': {
         'browser': true,
-        'es2021': true
+        'es2021': true,
     },
     'extends': 'airbnb',
     'overrides': [
         {
             'env': {
-                'node': true
+                'node': true,
             },
             'files': [
-                '.eslintrc.{js,cjs}'
+                '.eslintrc.{js,cjs}',
             ],
             'parserOptions': {
-                'sourceType': 'script'
-            }
-        }
+                'sourceType': 'script',
+            },
+        },
     ],
     'parserOptions': {
         'ecmaVersion': 'latest',
-        'sourceType': 'module'
+        'sourceType': 'module',
     },
     'rules': {
-        "allowForLoopAfterthoughts": true
-    }
-}
+        'allowForLoopAfterthoughts': 0,
+    },
+};

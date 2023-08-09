@@ -1,4 +1,7 @@
-import { randomGridPosition } from "./gridPositions.js";
+/* eslint-disable no-plusplus */
+/* eslint-disable import/extensions */
+/* eslint-disable import/prefer-default-export */
+import { randomGridPosition } from '../../utils/gridPositions.js';
 
 export class Snake {
   constructor() {
@@ -19,10 +22,10 @@ export class Snake {
 
   render(gameBoard) {
     this.snakeBody.forEach((segment) => {
-      const snakeElement = document.createElement("div");
+      const snakeElement = document.createElement('div');
       snakeElement.style.gridRowStart = segment.y;
       snakeElement.style.gridColumnStart = segment.x;
-      snakeElement.classList.add("snake");
+      snakeElement.classList.add('snake');
       gameBoard.appendChild(snakeElement);
     });
   }
@@ -31,6 +34,7 @@ export class Snake {
     this.newSegments++;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   equalPositions(pos1, pos2) {
     return pos1.x === pos2.x && pos1.y === pos2.y;
   }
