@@ -21,7 +21,7 @@ export class Game {
   main(currentTime) {
     // check if game is over
     if (this.isGameOver) {
-      if (confirm('You lost. Click OK to restart')) {
+      if (confirm(`You lost. Click OK to restart. Points:${this.snake.points}`)) {
         window.location = '';
       }
       return;

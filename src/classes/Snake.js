@@ -7,6 +7,7 @@ export class Snake {
   constructor() {
     this.snakeBody = [randomGridPosition()];
     this.newSegments = 0;
+    this.points = 0;
   }
 
   movement(inputDirection) {
@@ -30,8 +31,13 @@ export class Snake {
     });
   }
 
-  grow() {
+  grow(fruit) {
     this.newSegments++;
+    if (fruit.type === 'cherry') {
+      this.points += fruit.points;
+    } else {
+      this.points += fruit.points;
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
