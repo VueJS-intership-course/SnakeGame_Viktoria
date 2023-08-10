@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-alert */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable import/extensions */
@@ -25,11 +27,12 @@ export class Game {
   }
 
   main(currentTime) {
-    // check if game is over
     if (this.isGameOver) {
-      if (
-        confirm(`You lost. Click OK to restart. Points:${this.snake.points}`)
-      ) {
+      const username = this.username;
+      const points = this.snake.points;
+      this.saveScore(username, points);
+
+      if (confirm(`${username} lost. Click OK to restart. Points: ${points}`)) {
         window.location = '';
       }
       return;
@@ -64,6 +67,51 @@ export class Game {
   }
 
   start() {
+    const username = prompt('Enter username: ');
+    this.username = username;
+    this.displayScoreboard();
     window.requestAnimationFrame(this.main.bind(this));
+  }
+
+  saveScore(username, points) {
+    const scores = JSON.parse(localStorage.getItem('scores')) || [];
+    scores.push({ username, points });
+    localStorage.setItem('scores', JSON.stringify(scores));
+  }
+
+  getScores() {
+    return JSON.parse(localStorage.getItem('scores')) || [];
+  }
+
+  displayScoreboard() {
+    const scoreList = document.getElementById('score-list');
+    scoreList.innerHTML = '';
+    const scores = this.getScores();
+
+    scores.sort((a, b) => b.points - a.points);
+
+    scores.forEach((score, index) => {
+      const scoreItem = document.createElement('li');
+      scoreItem.textContent = `${index + 1}. ${score.username}: ${score.points} points`;
+
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.addEventListener('click', () => this.removeScore(index));
+
+      scoreItem.appendChild(deleteButton);
+      scoreItem.classList.add('score-item');
+      scoreList.appendChild(scoreItem);
+    });
+  }
+
+  removeScore(index) {
+    const scores = this.getScores();
+    scores.sort((a, b) => b.points - a.points);
+
+    if (index >= 0 && index < scores.length) {
+      scores.splice(index, 1);
+      localStorage.setItem('scores', JSON.stringify(scores));
+      this.displayScoreboard();
+    }
   }
 }
