@@ -8,8 +8,3 @@ export const DIRECTIONS = {
   LEFT: { x: -1, y: 0 },
   RIGHT: { x: 1, y: 0 },
 };
-
-export const FRUIT_TYPES = [
-  { type: 'cherry', points: 10 },
-  { type: 'banana', points: 50 },
-];

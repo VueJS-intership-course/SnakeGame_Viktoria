@@ -10,6 +10,14 @@ export class Snake {
     this.points = 0;
   }
 
+  addSegments() {
+    for (let i = 0; i < this.newSegments; i++) {
+      this.snakeBody.push({ ...this.snakeBody[this.snakeBody.length - 1] });
+    }
+
+    this.newSegments = 0;
+  }
+
   movement(inputDirection) {
     this.addSegments();
 
@@ -33,11 +41,7 @@ export class Snake {
 
   grow(fruit) {
     this.newSegments++;
-    if (fruit.type === 'cherry') {
-      this.points += fruit.points;
-    } else {
-      this.points += fruit.points;
-    }
+    this.points += fruit.points;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -58,13 +62,5 @@ export class Snake {
 
   isIntersecting() {
     return this.onSnake(this.snakeBody[0], { ignoreHead: true });
-  }
-
-  addSegments() {
-    for (let i = 0; i < this.newSegments; i++) {
-      this.snakeBody.push({ ...this.snakeBody[this.snakeBody.length - 1] });
-    }
-
-    this.newSegments = 0;
   }
 }

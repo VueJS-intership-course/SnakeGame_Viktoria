@@ -4,8 +4,9 @@
 import { Snake } from './Snake.js';
 import { Input } from '../../utils/Input.js';
 import { outsideGrid } from '../../utils/gridPositions.js';
-import { Food } from './Food.js';
 import { SNAKE_SPEED } from '../../utils/constants.js';
+import { Cherry } from './Cherry.js';
+import { Banana } from './Banana.js';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Game {
@@ -15,13 +16,20 @@ export class Game {
     this.gameBoard = document.getElementById('game-board');
     this.snake = new Snake();
     this.input = new Input();
-    this.food = new Food(this.snake);
+    this.food = this.getRandomFoodType();
+  }
+
+  getRandomFoodType() {
+    const food = Math.random() < 0.5 ? new Cherry(this.snake) : new Banana(this.snake);
+    return food;
   }
 
   main(currentTime) {
     // check if game is over
     if (this.isGameOver) {
-      if (confirm(`You lost. Click OK to restart. Points:${this.snake.points}`)) {
+      if (
+        confirm(`You lost. Click OK to restart. Points:${this.snake.points}`)
+      ) {
         window.location = '';
       }
       return;
@@ -40,14 +48,14 @@ export class Game {
   update() {
     const inputDirection = this.input.getInputDirection();
     this.snake.movement(inputDirection);
-    this.food.update();
+    this.food.update(this.food);
     this.checkForGameOver();
   }
 
   render() {
     this.gameBoard.innerHTML = '';
     this.snake.render(this.gameBoard);
-    this.food.render(this.gameBoard);
+    this.food.render(this.gameBoard, this.food.frType);
   }
 
   checkForGameOver() {
@@ -59,7 +67,3 @@ export class Game {
     window.requestAnimationFrame(this.main.bind(this));
   }
 }
-
-// snake speed const
-const game = new Game();
-game.start();
