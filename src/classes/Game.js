@@ -29,7 +29,8 @@ export class Game {
     if (this.isGameOver) {
       const username = this.username;
       const points = this.snake.points;
-      this.saveScore(username, points);
+      const time = Date.now();
+      this.saveScore(username, points, time);
 
       if (confirm(`${username} lost. Click OK to restart. Points: ${points}`)) {
         window.location = '';
@@ -71,9 +72,9 @@ export class Game {
     window.requestAnimationFrame(this.main.bind(this));
   }
 
-  saveScore(username, points) {
+  saveScore(username, points, time) {
     const scores = JSON.parse(localStorage.getItem('scores')) || [];
-    scores.push({ username, points });
+    scores.push({ username, points, time });
     localStorage.setItem('scores', JSON.stringify(scores));
   }
 
@@ -86,7 +87,12 @@ export class Game {
     scoreList.innerHTML = '';
     const scores = this.getScores();
 
-    scores.sort((a, b) => b.points - a.points);
+    scores.sort((a, b) => {
+      if (b.points === a.points) {
+        return b.time - a.time;
+      }
+      return b.points - a.points;
+    });
 
     scores.forEach((score, index) => {
       const scoreItem = document.createElement('li');
