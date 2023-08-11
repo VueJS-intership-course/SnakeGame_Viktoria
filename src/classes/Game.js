@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-alert */
@@ -18,6 +19,7 @@ export class Game {
     this.snake = new Snake();
     this.input = new Input();
     this.food = this.getRandomFoodType();
+    this.snakeSpeed = SNAKE_SPEED;
   }
 
   getRandomFoodType() {
@@ -40,7 +42,7 @@ export class Game {
 
     window.requestAnimationFrame(this.main.bind(this));
     const secondsSinceLastRender = (currentTime - this.lastRenderTime) / 1000;
-    if (secondsSinceLastRender < 1 / SNAKE_SPEED) return;
+    if (secondsSinceLastRender < 1 / this.snakeSpeed) return;
 
     this.lastRenderTime = currentTime;
 
@@ -51,7 +53,13 @@ export class Game {
   update() {
     const inputDirection = this.input.getInputDirection();
     this.snake.movement(inputDirection);
-    this.food.update(this.food);
+
+    if (this.snake.onSnake(this.food.food)) {
+      this.snake.grow(this.food);
+      this.food = this.getRandomFoodType();
+      this.snakeSpeed += 0.5;
+    }
+
     this.checkForGameOver();
   }
 
