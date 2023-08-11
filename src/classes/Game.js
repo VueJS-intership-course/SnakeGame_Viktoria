@@ -5,7 +5,6 @@
 /* eslint-disable import/extensions */
 import { Snake } from './Snake.js';
 import { Input } from '../../utils/Input.js';
-import { outsideGrid } from '../../utils/gridPositions.js';
 import { SNAKE_SPEED } from '../../utils/constants.js';
 import { Cherry } from './Cherry.js';
 import { Banana } from './Banana.js';
@@ -62,8 +61,7 @@ export class Game {
   }
 
   checkForGameOver() {
-    this.isGameOver = outsideGrid(this.snake.getSnakeStart()) || this.snake.isIntersecting();
-    // todo -> remove outside grid isGameOver & implement mirroring
+    this.isGameOver = this.snake.isIntersecting();
   }
 
   start() {

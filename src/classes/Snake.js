@@ -2,6 +2,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/prefer-default-export */
 import { randomGridPosition } from '../../utils/gridPositions.js';
+import { GRID_SIZE } from '../../utils/constants.js';
 
 export class Snake {
   constructor() {
@@ -27,6 +28,19 @@ export class Snake {
 
     this.snakeBody[0].x += inputDirection.x;
     this.snakeBody[0].y += inputDirection.y;
+
+    // wall mirroring
+    if (this.snakeBody[0].x < 1) {
+      this.snakeBody[0].x = GRID_SIZE;
+    } else if (this.snakeBody[0].x > GRID_SIZE) {
+      this.snakeBody[0].x = 1;
+    }
+
+    if (this.snakeBody[0].y < 1) {
+      this.snakeBody[0].y = GRID_SIZE;
+    } else if (this.snakeBody[0].y > GRID_SIZE) {
+      this.snakeBody[0].y = 1;
+    }
   }
 
   render(gameBoard) {

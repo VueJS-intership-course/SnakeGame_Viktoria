@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 /* eslint-disable import/extensions */
 import { GRID_SIZE } from './constants.js';
 
@@ -6,13 +7,4 @@ export function randomGridPosition() {
     x: Math.floor(Math.random() * GRID_SIZE) + 1,
     y: Math.floor(Math.random() * GRID_SIZE) + 1,
   };
-}
-
-export function outsideGrid(position) {
-  return (
-    position.x < 1
-    || position.x > GRID_SIZE
-    || position.y < 1
-    || position.y > GRID_SIZE
-  );
 }
