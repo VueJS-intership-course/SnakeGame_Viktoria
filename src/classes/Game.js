@@ -1,9 +1,10 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-plusplus */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable prefer-destructuring */
-/* eslint-disable no-alert */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable import/extensions */
+import { DateTime } from 'https://cdn.skypack.dev/luxon';
 import { Snake } from './Snake.js';
 import { Input } from '../../utils/Input.js';
 import { SNAKE_SPEED } from '../../utils/constants.js';
@@ -31,10 +32,10 @@ export class Game {
     if (this.isGameOver) {
       const username = this.username;
       const points = this.snake.points;
-      const time = Date.now();
+      const time = this.time;
       this.saveScore(username, points, time);
 
-      if (confirm(`${username} lost. Click OK to restart. Points: ${points}`)) {
+      if (confirm(`${username} lost. Points: ${points} Click OK to restart. ${time}`)) {
         window.location = '';
       }
       return;
@@ -74,8 +75,15 @@ export class Game {
   }
 
   start() {
-    const username = prompt('Enter username: ');
+    let username = prompt('Enter username: ');
+
+    while (!username) {
+      username = prompt('Username cannot be null. Please enter a username: ');
+    }
     this.username = username;
+
+    const currentStartTime = DateTime.now().toLocaleString();
+    this.time = currentStartTime;
     this.displayScoreboard();
     window.requestAnimationFrame(this.main.bind(this));
   }
@@ -104,7 +112,7 @@ export class Game {
 
     scores.forEach((score, index) => {
       const scoreItem = document.createElement('li');
-      scoreItem.textContent = `${index + 1}. ${score.username}: ${score.points} points`;
+      scoreItem.textContent = `${index + 1}. ${score.username}: ${score.points} points. ${this.time}`;
 
       const deleteButton = document.createElement('button');
       deleteButton.textContent = 'Delete';
