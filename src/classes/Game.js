@@ -21,7 +21,7 @@ export class Game {
   }
 
   getRandomFoodType() {
-    const food = Math.random() < 0.5 ? new Cherry(this.snake) : new Banana(this.snake);
+    const food = Math.random() < 0.7 ? new Cherry(this.snake) : new Banana(this.snake);
     return food;
   }
 
