@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/extensions */
 /* eslint-disable import/prefer-default-export */
@@ -44,13 +45,16 @@ export class Snake {
   }
 
   render(gameBoard) {
-    this.snakeBody.forEach((segment) => {
+    const segmentsToElements = this.snakeBody.reduce((acc, segment) => {
       const snakeElement = document.createElement('div');
       snakeElement.style.gridRowStart = segment.y;
       snakeElement.style.gridColumnStart = segment.x;
       snakeElement.classList.add('snake');
-      gameBoard.appendChild(snakeElement);
-    });
+
+      return [...acc, snakeElement];
+    }, []);
+
+    gameBoard.append(...segmentsToElements);
   }
 
   grow(fruit) {
@@ -64,10 +68,8 @@ export class Snake {
   }
 
   onSnake(position, { ignoreHead = false } = {}) {
-    return this.snakeBody.some((segment, index) => {
-      if (ignoreHead && index === 0) return false;
-      return this.equalPositions(segment, position);
-    });
+    return this.snakeBody.some((segment, index) =>
+      (ignoreHead && index === 0 ? false : this.equalPositions(segment, position)));
   }
 
   getSnakeStart() {
