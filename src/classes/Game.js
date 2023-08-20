@@ -10,6 +10,7 @@ import { Input } from '../../utils/Input.js';
 import { SNAKE_SPEED } from '../../utils/constants.js';
 import { Cherry } from './Cherry.js';
 import { Banana } from './Banana.js';
+import { Storage } from './localStorage.js';
 
 // eslint-disable-next-line import/prefer-default-export
 export class Game {
@@ -21,6 +22,7 @@ export class Game {
     this.input = new Input();
     this.food = this.getRandomFoodType();
     this.snakeSpeed = SNAKE_SPEED;
+    this.storage = new Storage();
   }
 
   getRandomFoodType() {
@@ -33,7 +35,7 @@ export class Game {
       const username = this.username;
       const points = this.snake.points;
       const time = this.time;
-      this.saveScore(username, points, time);
+      this.storage.saveScore(username, points, time);
 
       if (confirm(`${username} lost. Points: ${points} Click OK to restart. ${time}`)) {
         window.location = '';
@@ -88,20 +90,10 @@ export class Game {
     window.requestAnimationFrame(this.main.bind(this));
   }
 
-  saveScore(username, points, time) {
-    const scores = JSON.parse(localStorage.getItem('scores')) || [];
-    scores.push({ username, points, time });
-    localStorage.setItem('scores', JSON.stringify(scores));
-  }
-
-  getScores() {
-    return JSON.parse(localStorage.getItem('scores')) || [];
-  }
-
   displayScoreboard() {
     const scoreList = document.getElementById('score-list');
     scoreList.innerHTML = '';
-    const scores = this.getScores();
+    const scores = this.storage.getScores();
 
     scores.sort((a, b) => {
       if (b.points === a.points) {
@@ -116,22 +108,15 @@ export class Game {
 
       const deleteButton = document.createElement('button');
       deleteButton.textContent = 'Delete';
-      deleteButton.addEventListener('click', () => this.removeScore(index));
+
+      deleteButton.addEventListener('click', () => {
+        this.storage.removeScore(index);
+        this.displayScoreboard();
+      });
 
       scoreItem.appendChild(deleteButton);
       scoreItem.classList.add('score-item');
       scoreList.appendChild(scoreItem);
     });
-  }
-
-  removeScore(index) {
-    const scores = this.getScores();
-    scores.sort((a, b) => b.points - a.points);
-
-    if (index >= 0 && index < scores.length) {
-      scores.splice(index, 1);
-      localStorage.setItem('scores', JSON.stringify(scores));
-      this.displayScoreboard();
-    }
   }
 }
