@@ -5,13 +5,59 @@ body {
   justify-content: center;
   align-items: center;
   margin: 0;
-  background-color: black;
 }
 
 #game-board {
-  background-color: #CCC;
+  background-color: #201d1d;
   display: grid;
-  grid-template-rows: repeat(30, 20px);
-  grid-template-columns: repeat(30, 20px);
+  grid-template-rows: repeat(25, 20px);
+  grid-template-columns: repeat(25, 20px);
   border: 2px solid green;
+}
+
+.snake {
+  background-color: #0CC60C;
+  border: 1px solid black;
+}
+
+.cherry {
+  background-color: red;
+  border: 0.5px solid black;
+}
+
+.banana {
+  background-color: yellow;
+  border: 0.5px solid black;
+}
+
+#scoreboard {
+  display: flex;
+  justify-content: center;
+  background-color: #e3e3e3;
+}
+
+#score-list {
+  list-style: none;
+  margin: 20px;
+}
+
+.score-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.score-item button {
+  margin-left: 10px;
+  padding: 2px 6px;
+  background-color: #ff3838;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.score-item button:hover {
+  background-color: #cc2828;
 }

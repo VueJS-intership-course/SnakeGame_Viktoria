@@ -1,10 +1,5 @@
-// food.js
-import { randomGridPosition } from './grid.js';
+/* eslint-disable import/extensions */
+import { Game } from './src/classes/Game.js';
 
-export class Food {
-  constructor() {
-    this.food = this.getRandomFoodPosition();
-  }
-
-  // ... (rest of the class definition)
-}
+const game = new Game();
+game.start();
